@@ -1,0 +1,89 @@
+name: Release
+
+# Push a tag named after the version to release it:
+#   git tag v1.0.2 && git push origin v1.0.2
+# The tag must match the version in manifest.json, package.json and the newest
+# CHANGELOG.md section. A version with a suffix (1.1.0-beta.1) is published as
+# a prerelease.
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+  # Build provenance for the .tmxplug, so anyone can check where it was built.
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check the tag matches the version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          MANIFEST_VERSION="$(node -p "require('./manifest.json').version")"
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+          if [ "$TAG_VERSION" != "$MANIFEST_VERSION" ] || [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match manifest.json ($MANIFEST_VERSION) and package.json ($PACKAGE_VERSION)"
+            exit 1
+          fi
+          echo "VERSION=$TAG_VERSION" >> "$GITHUB_ENV"
+
+      - name: Test
+        run: npm test
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Validate
+        run: npm run validate
+
+      - name: Pack
+        run: npx termix-plugin pack --out release
+
+      - name: Checksum
+        run: |
+          cd release
+          sha256sum *.tmxplug > SHA256SUMS
+          cat SHA256SUMS >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: release/*.tmxplug
+
+      - name: Release notes
+        run: npx termix-plugin changelog --version "$VERSION" > RELEASE_NOTES.md
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PRERELEASE=""
+          case "$VERSION" in *-*) PRERELEASE="--prerelease" ;; esac
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" release/*.tmxplug release/SHA256SUMS --clobber
+            gh release edit "$GITHUB_REF_NAME" --notes-file RELEASE_NOTES.md $PRERELEASE
+          else
+            gh release create "$GITHUB_REF_NAME" release/*.tmxplug release/SHA256SUMS \
+              --title "Better Termix $VERSION" \
+              --notes-file RELEASE_NOTES.md \
+              --verify-tag $PRERELEASE
+          fi
