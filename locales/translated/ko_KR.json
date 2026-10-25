@@ -1,0 +1,52 @@
+{
+  "plugin": {
+    "name": "Better Termix",
+    "description": "작은 UI 개선: 대시보드에서 호스트 IP 숨기기, 상태에 따라 호스트 이름 색상 변경, 새로고침 시 흰 화면 깜빡임 제거, Normal과 Large 사이 크기 추가."
+  },
+  "settings": {
+    "admin": {
+      "bootPatch": {
+        "label": "새로고침 시 흰 화면 깜빡임 막기",
+        "description": "앱이 로드되기 전에 테마가 보이도록 Termix의 index.html에 작은 스크립트를 추가합니다. 서버의 Termix 파일을 수정하며, 이 옵션을 끄거나 플러그인을 비활성화하면 원래대로 돌아갑니다."
+      },
+      "bootPatchDir": {
+        "label": "프런트엔드 폴더",
+        "description": "Termix의 index.html이 있는 폴더입니다. 비워 두면 자동으로 찾습니다(Docker에서는 /app/html).",
+        "placeholder": "/app/html"
+      }
+    },
+    "user": {
+      "hideIp": {
+        "label": "호스트 IP 주소 숨기기",
+        "description": "대시보드의 Host Status 목록과 고정된 호스트 옆의 IP를 숨깁니다. 화면 표시만 바뀌고 접속은 계속 IP를 사용합니다."
+      },
+      "statusNames": {
+        "label": "사이드바에 호스트 상태 표시",
+        "description": "사이드바의 각 호스트가 온라인인지 오프라인인지 표시합니다."
+      },
+      "statusStyle": {
+        "label": "상태 표시 방식",
+        "description": "호스트 이름 옆에 상태를 표시하는 방식입니다.",
+        "name": "이름 색상",
+        "dot": "이름 왼쪽 점",
+        "both": "둘 다"
+      },
+      "onlineColor": {
+        "label": "온라인 색상",
+        "placeholder": "#22c55e"
+      },
+      "offlineColor": {
+        "label": "오프라인 색상",
+        "placeholder": "#ef4444"
+      },
+      "mediumSize": {
+        "label": "Normal과 Large 사이 크기 사용",
+        "description": "Appearance에서 고른 인터페이스 크기 대신 사용합니다."
+      },
+      "mediumSizePx": {
+        "label": "크기(픽셀)",
+        "description": "Normal은 14, Large는 17입니다."
+      }
+    }
+  }
+}

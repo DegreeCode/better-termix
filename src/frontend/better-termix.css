@@ -1,0 +1,114 @@
+/*
+ * Every rule is gated by a class the frontend puts on <html> from the user's
+ * settings, so turning a setting off (or disabling the plugin) restores the
+ * original UI. The selectors follow Classic Layout's markup.
+ */
+
+/* Dashboard Host Status: the IP fact and the rule before it. */
+html.bt-hide-ip
+  span[aria-hidden="true"].h-3.w-px.bg-border:has(
+    + span.min-w-0.truncate > span.font-mono[title]
+  ),
+html.bt-hide-ip
+  span.h-3.w-px.bg-border
+  + span.min-w-0.truncate:has(> span.font-mono[title]) {
+  display: none !important;
+}
+
+/* Dashboard quick actions: the ip:port of each pinned host. */
+html.bt-hide-ip button > span.ml-auto.truncate.font-mono.text-\[10px\] {
+  display: none !important;
+}
+
+/*
+ * Sidebar host status, as a name color (bt-status-color), a dot left of the
+ * name (bt-status-dot) or both. Each rule matches the name two ways:
+ *
+ * - the hidden marker this plugin's host badge puts in the name row, which
+ *   works with or without status stripes (the Simple preset hides them)
+ * - the row's status stripe, when badges are hidden in Customize Sidebar. It
+ *   carries the classes core's getStatusClasses gives it, for both color
+ *   schemes; a stripe still checking pulses.
+ */
+html.bt-status-dot
+  :is(
+    [data-drag-label]:has(> [data-bt-status])
+      > span.font-semibold.tracking-tight,
+    .host-status-stripe
+      ~ div
+      [data-drag-label]
+      > span.font-semibold.tracking-tight
+  )::before {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: 0.45em;
+  border-radius: 9999px;
+  vertical-align: 0.1em;
+  background-color: var(--muted-foreground);
+  opacity: 0.5;
+}
+
+html.bt-status-dot
+  :is(
+    [data-drag-label]:has(> [data-bt-status="online"])
+      > span.font-semibold.tracking-tight,
+    .host-status-stripe:is(.bg-emerald-500, .bg-accent-brand):not(
+        .animate-pulse
+      )
+      ~ div
+      [data-drag-label]
+      > span.font-semibold.tracking-tight
+  )::before {
+  background-color: var(--bt-online-color, #22c55e);
+  opacity: 1;
+}
+
+html.bt-status-dot
+  :is(
+    [data-drag-label]:has(> [data-bt-status="offline"])
+      > span.font-semibold.tracking-tight,
+    .host-status-stripe:is(.bg-red-500\/40, .bg-muted-foreground\/20):not(
+        .animate-pulse
+      )
+      ~ div
+      [data-drag-label]
+      > span.font-semibold.tracking-tight
+  )::before {
+  background-color: var(--bt-offline-color, #ef4444);
+  opacity: 1;
+}
+
+html.bt-status-color
+  :is(
+    [data-drag-label]:has(> [data-bt-status="online"])
+      > span.font-semibold.tracking-tight,
+    .host-status-stripe:is(.bg-emerald-500, .bg-accent-brand):not(
+        .animate-pulse
+      )
+      ~ div
+      [data-drag-label]
+      > span.font-semibold.tracking-tight
+  ) {
+  color: var(--bt-online-color, #22c55e) !important;
+}
+
+html.bt-status-color
+  :is(
+    [data-drag-label]:has(> [data-bt-status="offline"])
+      > span.font-semibold.tracking-tight,
+    .host-status-stripe:is(.bg-red-500\/40, .bg-muted-foreground\/20):not(
+        .animate-pulse
+      )
+      ~ div
+      [data-drag-label]
+      > span.font-semibold.tracking-tight
+  ) {
+  color: var(--bt-offline-color, #ef4444) !important;
+}
+
+/* A size between Normal (14px) and Large (17px). Every length is in rem. */
+html.bt-medium-size {
+  font-size: var(--bt-font-size, 15.5px) !important;
+}

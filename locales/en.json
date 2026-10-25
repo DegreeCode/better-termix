@@ -1,0 +1,52 @@
+{
+  "plugin": {
+    "name": "Better Termix",
+    "description": "Small UI fixes: hide host IPs on the dashboard, color host names by status, stop the white flash on reload and add a size between Normal and Large."
+  },
+  "settings": {
+    "admin": {
+      "bootPatch": {
+        "label": "Stop the white flash on reload",
+        "description": "Adds a small script to Termix's index.html so your theme shows before the app loads. It edits a Termix file on the server and is undone when you turn this off or disable the plugin."
+      },
+      "bootPatchDir": {
+        "label": "Frontend folder",
+        "description": "The folder that holds Termix's index.html. Leave empty to find it on its own (/app/html in Docker).",
+        "placeholder": "/app/html"
+      }
+    },
+    "user": {
+      "hideIp": {
+        "label": "Hide host IP addresses",
+        "description": "Hides the IP next to each host in the dashboard's Host Status list and pinned hosts. Only the display changes; connections keep using the IP."
+      },
+      "statusNames": {
+        "label": "Show host status in the sidebar",
+        "description": "Shows whether each host in the sidebar is online or offline."
+      },
+      "statusStyle": {
+        "label": "Status style",
+        "description": "How the status is shown next to each host name.",
+        "name": "Color the name",
+        "dot": "Dot left of the name",
+        "both": "Both"
+      },
+      "onlineColor": {
+        "label": "Online color",
+        "placeholder": "#22c55e"
+      },
+      "offlineColor": {
+        "label": "Offline color",
+        "placeholder": "#ef4444"
+      },
+      "mediumSize": {
+        "label": "Use a size between Normal and Large",
+        "description": "Overrides the interface size picked in Appearance."
+      },
+      "mediumSizePx": {
+        "label": "Size in pixels",
+        "description": "Normal is 14 and Large is 17."
+      }
+    }
+  }
+}

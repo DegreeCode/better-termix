@@ -1,0 +1,121 @@
+{
+  "id": "better-termix",
+  "name": "Better Termix",
+  "version": "1.0.2",
+  "description": "Small UI fixes: hide host IPs on the dashboard, color host names by status, stop the white flash on reload and add a size between Normal and Large.",
+  "author": {
+    "name": "DegreeCode"
+  },
+  "license": "Apache-2.0",
+  "repository": "https://github.com/DegreeCode/better-termix",
+  "docs": "https://github.com/DegreeCode/better-termix/tree/main/docs",
+  "category": "Productivity",
+  "icon": "Sparkles",
+  "features": [
+    "Hide host IP addresses on the dashboard",
+    "Host status in the sidebar as a colored name, a dot left of the name, or both",
+    "No white flash before your theme on reload",
+    "An interface size between Normal and Large"
+  ],
+  "env": [],
+  "engine": {
+    "termix": ">=26.10.5",
+    "api": "^1.5"
+  },
+  "capabilities": ["ui:surface"],
+  "contributes": {
+    "settings": {
+      "admin": [
+        {
+          "key": "bootPatch",
+          "type": "boolean",
+          "labelKey": "settings.admin.bootPatch.label",
+          "descriptionKey": "settings.admin.bootPatch.description",
+          "default": false
+        },
+        {
+          "key": "bootPatchDir",
+          "type": "string",
+          "labelKey": "settings.admin.bootPatchDir.label",
+          "descriptionKey": "settings.admin.bootPatchDir.description",
+          "placeholderKey": "settings.admin.bootPatchDir.placeholder",
+          "requires": "bootPatch",
+          "default": ""
+        }
+      ],
+      "user": [
+        {
+          "key": "hideIp",
+          "type": "boolean",
+          "labelKey": "settings.user.hideIp.label",
+          "descriptionKey": "settings.user.hideIp.description",
+          "default": true
+        },
+        {
+          "key": "statusNames",
+          "type": "boolean",
+          "labelKey": "settings.user.statusNames.label",
+          "descriptionKey": "settings.user.statusNames.description",
+          "default": true
+        },
+        {
+          "key": "statusStyle",
+          "type": "select",
+          "labelKey": "settings.user.statusStyle.label",
+          "descriptionKey": "settings.user.statusStyle.description",
+          "requires": "statusNames",
+          "options": [
+            {
+              "value": "name",
+              "labelKey": "settings.user.statusStyle.name"
+            },
+            {
+              "value": "dot",
+              "labelKey": "settings.user.statusStyle.dot"
+            },
+            {
+              "value": "both",
+              "labelKey": "settings.user.statusStyle.both"
+            }
+          ],
+          "default": "name"
+        },
+        {
+          "key": "onlineColor",
+          "type": "string",
+          "labelKey": "settings.user.onlineColor.label",
+          "placeholderKey": "settings.user.onlineColor.placeholder",
+          "requires": "statusNames",
+          "default": "#22c55e"
+        },
+        {
+          "key": "offlineColor",
+          "type": "string",
+          "labelKey": "settings.user.offlineColor.label",
+          "placeholderKey": "settings.user.offlineColor.placeholder",
+          "requires": "statusNames",
+          "default": "#ef4444"
+        },
+        {
+          "key": "mediumSize",
+          "type": "boolean",
+          "labelKey": "settings.user.mediumSize.label",
+          "descriptionKey": "settings.user.mediumSize.description",
+          "default": false
+        },
+        {
+          "key": "mediumSizePx",
+          "type": "number",
+          "labelKey": "settings.user.mediumSizePx.label",
+          "descriptionKey": "settings.user.mediumSizePx.description",
+          "requires": "mediumSize",
+          "min": 14,
+          "max": 17,
+          "default": 15.5
+        }
+      ]
+    }
+  },
+  "locales": "locales",
+  "platforms": ["linux", "win32", "darwin"]
+}

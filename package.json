@@ -1,0 +1,39 @@
+{
+  "name": "termix-plugin-better-termix",
+  "private": true,
+  "version": "1.0.2",
+  "type": "module",
+  "scripts": {
+    "build": "termix-plugin build",
+    "test": "termix-plugin test",
+    "typecheck": "tsc -p .",
+    "validate": "termix-plugin validate",
+    "migrations": "termix-plugin migrations",
+    "pack": "termix-plugin pack",
+    "sign": "termix-plugin sign",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@termix-ssh/plugin-sdk": "^1.0.21",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "i18next": "^26.4.2",
+    "jsdom": "^30.0.1",
+    "prettier": "3.9.9",
+    "react-i18next": "^17.0.16",
+    "sonner": "^2.0.8",
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.11"
+  },
+  "peerDependencies": {
+    "@termix-ssh/plugin-sdk": "^1.0.21",
+    "react": "^19.2.8"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
