@@ -1,9 +1,9 @@
-Better Termix adds four small fixes to the Termix interface. Settings are saved to your account, so they follow you to every PC, phone and tablet you sign in from.
+Better Termix adds small interface fixes and an optional terminal input workaround to Termix. Settings are saved to your account, so they follow you to every PC, phone and tablet you sign in from.
 
 ## Turn it on
 
 1. In Settings, General, turn on Plugin developer mode.
-2. In Plugins, choose Install from file and pick `better-termix-1.0.2.tmxplug`.
+2. In Plugins, choose Install from file and pick `better-termix-1.0.3.tmxplug`.
 3. Enable Better Termix, then reload the page.
 4. Change the options in Settings, under Better Termix.
 
@@ -30,3 +30,13 @@ This edits a Termix file on the server (`/app/html/index.html` in Docker). The p
 ## A size between Normal and Large
 
 Turn on Use a size between Normal and Large. It uses 15.5 pixels by default (Normal is 14 and Large is 17); change it with Size in pixels. It replaces the size picked in Appearance while it is on.
+
+## Fix disappearing text while editing terminal input
+
+An admin setting, off by default. If moving the cursor into the middle of a command and typing makes existing text disappear or look overwritten, turn on Fix disappearing text while editing terminal input. Then reload the page and reconnect the terminal. It disables SSH Terminal's predictive local echo for all users, so typed text waits for the server's response. High latency connections may feel slower.
+
+[SSH Terminal's local echo implementation](https://github.com/Termix-SSH/Plugin-SSH-Terminal/blob/d8b91203cfdaa671bac24b56439b3476b63e8f19/src/frontend/lib/terminal-local-echo.ts) predicts printable characters without accounting for insertion in the middle of existing input. This workaround targets that behavior; it does not repair shell prompt width errors or unrelated rendering problems. It keeps your saved SSH Terminal settings intact.
+
+This edits the bundled SSH Terminal's `dist/frontend.js` on the Termix server (normally `/app/dist/plugins/ssh-terminal/dist/frontend.js` in Docker). If it cannot be found, set SSH Terminal frontend file to its full path. The bundle must be from the `ssh-terminal` plugin and contain the supported local echo resolver; unrecognized builds are left unchanged and a warning is logged. See Termix's server logs if the option has no effect.
+
+The patch is applied on startup and when its settings change. After updating SSH Terminal, restart Better Termix to apply it again. Turning the option off or disabling Better Termix removes only its marked override, preserving any other bundle changes. Reload and reconnect after disabling too. Installations with read-only plugin files cannot use this workaround.

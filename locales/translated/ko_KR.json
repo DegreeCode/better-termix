@@ -1,7 +1,7 @@
 {
   "plugin": {
     "name": "Better Termix",
-    "description": "작은 UI 개선: 대시보드에서 호스트 IP 숨기기, 상태에 따라 호스트 이름 색상 변경, 새로고침 시 흰 화면 깜빡임 제거, Normal과 Large 사이 크기 추가."
+    "description": "UI 개선 및 선택적 터미널 입력 보정: 호스트 IP 숨기기, 호스트 상태 표시, 새로고침 시 흰 화면 깜빡임 제거, 인터페이스 크기 추가."
   },
   "settings": {
     "admin": {
@@ -13,6 +13,15 @@
         "label": "프런트엔드 폴더",
         "description": "Termix의 index.html이 있는 폴더입니다. 비워 두면 자동으로 찾습니다(Docker에서는 /app/html).",
         "placeholder": "/app/html"
+      },
+      "terminalInputFix": {
+        "label": "터미널 입력 중 글자 사라짐 방지",
+        "description": "문장 중간에 입력할 때 글자가 덮이거나 사라지는 현상을 피하도록 모든 사용자의 SSH Terminal 예측 로컬 에코를 끕니다. 서버의 프런트엔드 파일을 수정하며, 이 옵션을 끄거나 Better Termix를 비활성화하면 원복합니다. 변경 후 페이지를 새로고침하고 터미널을 다시 연결하세요."
+      },
+      "terminalFrontendFile": {
+        "label": "SSH Terminal 프런트엔드 파일",
+        "description": "비워 두면 기본 제공 SSH Terminal을 자동으로 찾습니다. 설치 위치가 다르면 dist/frontend.js의 전체 경로를 입력하세요.",
+        "placeholder": "/app/dist/plugins/ssh-terminal/dist/frontend.js"
       }
     },
     "user": {

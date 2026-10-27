@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+### Added
+
+- An opt-in admin setting to prevent disappearing or overwritten terminal input by disabling SSH Terminal predictive local echo; restores the original bundle when turned off
+
 ## 1.0.2
 
 ### Added

@@ -1,8 +1,8 @@
 {
   "id": "better-termix",
   "name": "Better Termix",
-  "version": "1.0.2",
-  "description": "Small UI fixes: hide host IPs on the dashboard, color host names by status, stop the white flash on reload and add a size between Normal and Large.",
+  "version": "1.0.3",
+  "description": "Small UI fixes and an optional terminal input fix: hide host IPs, show host status, stop the white flash on reload and add an interface size.",
   "author": {
     "name": "DegreeCode"
   },
@@ -15,7 +15,8 @@
     "Hide host IP addresses on the dashboard",
     "Host status in the sidebar as a colored name, a dot left of the name, or both",
     "No white flash before your theme on reload",
-    "An interface size between Normal and Large"
+    "An interface size between Normal and Large",
+    "Optional fix for disappearing terminal text when editing in the middle of a line"
   ],
   "env": [],
   "engine": {
@@ -40,6 +41,22 @@
           "descriptionKey": "settings.admin.bootPatchDir.description",
           "placeholderKey": "settings.admin.bootPatchDir.placeholder",
           "requires": "bootPatch",
+          "default": ""
+        },
+        {
+          "key": "terminalInputFix",
+          "type": "boolean",
+          "labelKey": "settings.admin.terminalInputFix.label",
+          "descriptionKey": "settings.admin.terminalInputFix.description",
+          "default": false
+        },
+        {
+          "key": "terminalFrontendFile",
+          "type": "string",
+          "labelKey": "settings.admin.terminalFrontendFile.label",
+          "descriptionKey": "settings.admin.terminalFrontendFile.description",
+          "placeholderKey": "settings.admin.terminalFrontendFile.placeholder",
+          "requires": "terminalInputFix",
           "default": ""
         }
       ],

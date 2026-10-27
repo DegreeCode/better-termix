@@ -43,7 +43,7 @@ checks the tag matches the versions, tests, builds, packs and publishes a GitHub
 
 ## About this plugin
 
-Better Termix is UI-only CSS plus one opt-in server file patch. It has no tables, routes or migrations.
+Better Termix is UI CSS plus opt-in server file patches. It has no tables, routes or migrations.
 
 - `src/frontend/better-termix.css`: every rule is gated by a `bt-*` class on `<html>`. Selectors follow
   Classic Layout's markup (dashboard `Facts` for the IP; for name colors, a hidden `[data-bt-status]` marker
@@ -51,6 +51,10 @@ Better Termix is UI-only CSS plus one opt-in server file patch. It has no tables
 - `src/frontend/index.tsx`: a hidden `shell.overlay` slot component reads the user settings and toggles
   the classes and `--bt-*` variables. It caches them, plus the theme's body background, in localStorage
   `better-termix:boot`.
+- `src/backend/terminal-input-patch.ts`: the admin `terminalInputFix` setting adds a marked early
+  return to SSH Terminal's known `resolveLocalEchoMode` function in its frontend bundle, forcing local
+  echo off for all users. Validates the owning manifest and resolver before writing; removes only its
+  override on disable, without restoring a stale backup. Re-applied on start/settings changes.
 - `src/backend/boot-script.ts`: the script that runs in `<head>` before Termix loads. It is shipped as its
   function's source text, so it must stay self-contained.
 - `src/backend/index-patch.ts`: with the admin setting `bootPatch` on, writes `better-termix-boot.js` next

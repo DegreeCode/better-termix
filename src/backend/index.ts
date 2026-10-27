@@ -1,4 +1,5 @@
 import type { PluginContext } from "@termix-ssh/plugin-sdk/backend";
+import { activateTerminalInputPatch } from "./terminal-input-patch.js";
 import {
   defaultFrontendDirs,
   findFrontendDir,
@@ -7,6 +8,7 @@ import {
 } from "./index-patch.js";
 
 export async function activate(ctx: PluginContext) {
+  await activateTerminalInputPatch(ctx);
   // The folder patched last, so turning the setting off cleans the right one.
   let patched: string | null = null;
 

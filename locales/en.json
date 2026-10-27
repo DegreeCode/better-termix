@@ -1,7 +1,7 @@
 {
   "plugin": {
     "name": "Better Termix",
-    "description": "Small UI fixes: hide host IPs on the dashboard, color host names by status, stop the white flash on reload and add a size between Normal and Large."
+    "description": "Small UI fixes and an optional terminal input fix: hide host IPs, show host status, stop the white flash on reload and add an interface size."
   },
   "settings": {
     "admin": {
@@ -13,6 +13,15 @@
         "label": "Frontend folder",
         "description": "The folder that holds Termix's index.html. Leave empty to find it on its own (/app/html in Docker).",
         "placeholder": "/app/html"
+      },
+      "terminalInputFix": {
+        "label": "Fix disappearing text while editing terminal input",
+        "description": "Disables predictive local echo in SSH Terminal for all users to avoid overwritten or missing text when inserting in the middle of a line. Edits its frontend file on the server; turning this off or disabling Better Termix restores it. Reload the page and reconnect terminals after changing this."
+      },
+      "terminalFrontendFile": {
+        "label": "SSH Terminal frontend file",
+        "description": "Leave empty to find the bundled SSH Terminal automatically. Set the full path to its dist/frontend.js if Termix is installed elsewhere.",
+        "placeholder": "/app/dist/plugins/ssh-terminal/dist/frontend.js"
       }
     },
     "user": {

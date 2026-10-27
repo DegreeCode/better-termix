@@ -1,0 +1,7 @@
+Better Termix
+
+tests/fixtures/terminal-local-echo.js.txt is a TypeScript-to-JavaScript
+transcription of Termix SSH Terminal's terminal-local-echo.ts, distributed
+under the Apache License, Version 2.0 (see LICENSE).
+Source: https://github.com/Termix-SSH/Plugin-SSH-Terminal/blob/d8b91203cfdaa671bac24b56439b3476b63e8f19/src/frontend/lib/terminal-local-echo.ts
+The fixture removes exports so it can run in an isolated regression test.
